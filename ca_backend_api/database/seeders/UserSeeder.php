@@ -29,11 +29,11 @@ class UserSeeder extends Seeder
             array(
                 "data" => [
                     "name" => "admin",
-                    "email" => "admin@gmail.com",
+                    "email" => "ca_admin@gmail.com",
                     "password" => bcrypt('Animal12!@'),
                     "visible_password" => "Animal12!@",
                 ],
-                "role" => "admin"
+                "role" => "ca-admin"
             ),
             array(
                 "data" => [
