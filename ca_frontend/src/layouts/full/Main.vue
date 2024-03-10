@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue';
+import { ref, shallowRef, computed } from 'vue';
 import sidebarItems from './vertical-sidebar/sidebarItem';
 import NavGroup from './vertical-sidebar/NavGroup/index.vue';
 import NavItem from './vertical-sidebar/NavItem/index.vue';
@@ -8,10 +8,13 @@ import Logo from './logo/Logo.vue';
 // Icon Imports
 import { Menu2Icon, BellRingingIcon } from 'vue-tabler-icons';
 // dropdown imports
+import store from '@/store'
 import NotificationDD from './vertical-header/NotificationDD.vue';
 import ProfileDD from './vertical-header/ProfileDD.vue';
 const sidebarMenu = shallowRef(sidebarItems);
 const sDrawer = ref(true);
+const currentUser = <any>computed(() => store.state.auth.user);
+
 </script>
 
 <template>
@@ -57,7 +60,7 @@ const sDrawer = ref(true);
             </div>
             <div>
                 <!-- Upgrade button -->
-                <v-btn class="mr-2 bg-primary" href="https://adminmart.com/templates/vuejs/?product_sortby=free" target="_blank">Download Free</v-btn>
+                <v-btn class="mr-2 bg-primary" href="https://adminmart.com/templates/vuejs/?product_sortby=free" target="_blank">{{ currentUser?.name }}</v-btn>
                 <!-- User Profile -->
                 <ProfileDD />
             </div>

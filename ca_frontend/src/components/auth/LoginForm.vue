@@ -1,17 +1,58 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-const checkbox = ref(true);
+import { required, helpers, email } from '@vuelidate/validators';
+import { useVuelidate } from '@vuelidate/core';
+import store from '@/store'
+const login_form = <any>ref({
+    email: 'ca_admin@gmail.com',
+    password: 'Animal12!@'
+});
+
+const rules = {
+    login_form: {
+        email: {
+            required: helpers.withMessage('The Email field is required', required),
+            email: helpers.withMessage('Please Enter a valid Email Address', email)
+        },
+        password: {
+            required: helpers.withMessage('The Password field is required', required)
+        }
+    }
+};
+const vv = useVuelidate(rules, { login_form });
+
+const submitLogin = () => {
+    vv.value.login_form.$touch();
+    if (vv.value.login_form.$invalid) return;
+    let data = login_form.value;
+    store.dispatch('auth/login' , data).then((response) => {
+
+    })
+};
 </script>
 
 <template>
     <v-row class="d-flex mb-3">
         <v-col cols="12">
-            <v-label class="font-weight-bold mb-1">Email</v-label>
-            <v-text-field variant="outlined" autocomplete="false" hide-details color="primary"></v-text-field>
+            <v-label class="font-weight-bold mb-1">Email ID</v-label>
+            <v-text-field
+                variant="outlined"
+                v-model="vv.login_form.email.$model"
+                :hide-details="vv?.login_form.email?.$errors[0] ? false : true"
+                :error-messages="vv?.login_form.email?.$errors[0]?.$message || ''"
+                color="primary"
+            ></v-text-field>
         </v-col>
         <v-col cols="12">
             <v-label class="font-weight-bold mb-1">Password</v-label>
-            <v-text-field variant="outlined" type="password" autocomplete="false" hide-details color="primary"></v-text-field>
+            <v-text-field
+                variant="outlined"
+                type="password"
+                v-model="vv.login_form.password.$model"
+                :hide-details="vv?.login_form.password?.$errors[0] ? false : true"
+                :error-messages="vv?.login_form.password?.$errors[0]?.$message || ''"
+                color="primary"
+            ></v-text-field>
         </v-col>
         <v-col cols="12" class="pt-0">
             <div class="d-flex flex-wrap align-center ml-n2">
@@ -26,7 +67,7 @@ const checkbox = ref(true);
             </div>
         </v-col>
         <v-col cols="12" class="pt-0">
-            <v-btn to="/" color="primary" size="large" block flat>Sign in</v-btn>
+            <v-btn @click="submitLogin" color="primary" size="large" block flat>Sign in</v-btn>
         </v-col>
     </v-row>
 </template>
