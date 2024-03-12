@@ -1,10 +1,12 @@
 import { createStore } from 'vuex'
 import auth from "@/store/modules/auth";
+import superadmin from "@/store/modules/superadmin";
 import VuexPersistence from 'vuex-persist'
 let stores = <any> "";
 
 stores = {
-  auth
+  auth,
+  superadmin
 }
 const vuexLocal = new VuexPersistence({
   modules: ['auth']

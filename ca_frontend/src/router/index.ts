@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import MainRoutes from './MainRoutes';
-import AuthRoutes from './AuthRoutes';
+import SuperAdminRoutes from './Modules/SuperAdminRoutes';
 import store from '@/store';
 
 export const router = createRouter({
@@ -26,8 +25,27 @@ export const router = createRouter({
                 requiresAuth: false
             }
         },
-        MainRoutes
-        // AuthRoutes
+        {
+            path: '/main',
+            meta: {
+                requiresAuth: true
+            },
+            redirect: '/main',
+            component: () => import('@/layouts/full/FullLayout.vue'),
+            children: [
+                {
+                    name: 'Dashboard',
+                    path: '/',
+                    component: () => import('@/views/dashboard/index.vue')
+                },
+                ...SuperAdminRoutes,
+                {
+                    name: 'Starter',
+                    path: '/sample-page',
+                    component: () => import('@/views/pages/SamplePage.vue')
+                }
+            ]
+        }
     ]
 });
 
@@ -38,7 +56,7 @@ router.beforeEach(async (to, from, next) => {
     const isAdmin = to.matched.some((record) => record.meta?.isAdmin);
     const isUser = to.matched.some((record) => record.meta?.isUser);
     let user = store.state.auth.user;
-    const { path, name, params } = to
+    const { path, name, params } = to;
     if (isLoggedIn && ['login', 'forgotPassword', 'forgotView'].includes(name)) {
         return next('/');
     } else if (requiresAuth && isLoggedIn && isSuperAdmin && user.role != 'super-admin') {

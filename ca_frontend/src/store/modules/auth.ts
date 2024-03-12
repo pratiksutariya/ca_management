@@ -35,7 +35,17 @@ const actions = {
             commit('SET_ROLE', resp.data.data?.role);
         }
         return resp;
-    }
+    },
+    async logout({ commit }, data: any) {
+        let resp = await axios.get('user/logout', data);
+        if (resp.data.status == true) {
+            commit('SET_USER', "");
+            commit('SET_ID_TOKEN', "");
+            commit('SET_AUTHENTICATED', false);
+            commit('SET_ROLE', "");
+        }
+        return resp;
+    },
 };
 
 export default {

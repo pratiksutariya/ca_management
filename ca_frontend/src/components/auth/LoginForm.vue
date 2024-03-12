@@ -2,12 +2,15 @@
 import { ref } from 'vue';
 import { required, helpers, email } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
+import { useToast } from "vue-toastification";
+const toast = useToast();
+import { useRouter, useRoute } from 'vue-router'
 import store from '@/store'
 const login_form = <any>ref({
     email: 'ca_admin@gmail.com',
     password: 'Animal12!@'
 });
-
+const router = useRouter()
 const rules = {
     login_form: {
         email: {
@@ -26,7 +29,10 @@ const submitLogin = () => {
     if (vv.value.login_form.$invalid) return;
     let data = login_form.value;
     store.dispatch('auth/login' , data).then((response) => {
-
+        if(response.data.status){
+            router.push('/');
+            toast.success('Login Successfully')
+        }
     })
 };
 </script>

@@ -56,11 +56,11 @@ const currentUser = <any>computed(() => store.state.auth.user);
                     <Menu2Icon size="20" stroke-width="1.5" />
                 </v-btn>
                 <!-- Notification -->
-                <NotificationDD />
+                <!-- <NotificationDD /> -->
             </div>
             <div>
                 <!-- Upgrade button -->
-                <v-btn class="mr-2 bg-primary" href="https://adminmart.com/templates/vuejs/?product_sortby=free" target="_blank">{{ currentUser?.name }}</v-btn>
+                <v-btn class="mr-2 bg-primary">{{ currentUser?.name }}</v-btn>
                 <!-- User Profile -->
                 <ProfileDD />
             </div>

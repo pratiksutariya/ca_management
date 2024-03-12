@@ -26,39 +26,12 @@ const sidebarItem: menu[] = [
         icon: LayoutDashboardIcon,
         to: '/'
     },
-    // { header: 'utilities' },
-    // {
-    //     title: 'Typography',
-    //     icon: TypographyIcon,
-    //     to: '/ui/typography'
-    // },
-    // {
-    //     title: 'Shadow',
-    //     icon: CopyIcon,
-    //     to: '/ui/shadow'
-    // },
-    { header: 'auth' },
+    { header: 'Manage CA User' },
     {
-        title: 'Login',
-        icon: LoginIcon,
-        to: '/auth/login'
+        title: 'CA Users',
+        icon: 'UsersIcon',
+        to: '/ca-users'
     },
-    {
-        title: 'Register',
-        icon: UserPlusIcon,
-        to: '/auth/register'
-    },
-    // { header: 'Extra' },
-    // {
-    //     title: 'Icons',
-    //     icon: MoodHappyIcon,
-    //     to: '/icons'
-    // },
-    // {
-    //     title: 'Sample Page',
-    //     icon: ApertureIcon,
-    //     to: '/sample-page'
-    // },
 ];
 
 export default sidebarItem;
