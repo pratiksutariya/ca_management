@@ -2,7 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\{AuthController,SectionController,PermissionController};
+use App\Http\Controllers\Api\{
+        AuthController,
+        PermissionController,
+        SuperAdmin\UserController
+    };
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +27,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::group(['prefix' => 'user','middleware' => ['auth:api']], function () { 
     Route::get('/logout', [AuthController::class, 'logout']);
 });
+Route::group(['prefix' => 'ca','middleware' => ['auth:api','role:super-admin']], function () {
+    Route::post('/add-new-ca', [UserController::class, 'new_ca_account']);
+    
+});
 
-// Route::group(['prefix' => 'user','middleware' => ['auth:api','role:author']], function () {
-//     Route::post('/assign-permission', [PermissionController::class, 'assignPermission']);
-//     Route::post('/revoke-permission', [PermissionController::class, 'revokePermission']);
-// });
